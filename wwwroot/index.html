@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reorganizer GSTV Tech - Processador de CSV</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .upload-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 2px dashed #dee2e6;
+            transition: all 0.3s ease;
+        }
+
+        .upload-section:hover {
+            border-color: #4facfe;
+            background: #f0f8ff;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-input {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-input-label {
+            display: block;
+            padding: 20px;
+            background: white;
+            border: 2px dashed #4facfe;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            color: #4facfe;
+        }
+
+        .file-input-label:hover {
+            background: #f0f8ff;
+            border-color: #00f2fe;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px 5px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(79, 172, 254, 0.3);
+        }
+
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .results-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .results-section.show {
+            display: block;
+        }
+
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .summary-table th,
+        .summary-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .summary-table th {
+            background: #4facfe;
+            color: white;
+            font-weight: 600;
+        }
+
+        .summary-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .uncategorized-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #fff3cd;
+            border-radius: 10px;
+            border-left: 4px solid #ffc107;
+        }
+
+        .uncategorized-item {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .uncategorized-item input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #4facfe;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .alert {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .alert.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .download-section {
+            text-align: center;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏦 Reorganizer GSTV Tech</h1>
+            <p>Processe suas planilhas CSV e organize suas transações por categoria</p>
+        </div>
+
+        <div class="content">
+            <div class="upload-section">
+                <h2>📁 Upload do Arquivo CSV</h2>
+                <p>Selecione um arquivo CSV com as colunas: Descrição e Valor (em R$)</p>
+                <p><small>O sistema processará apenas os campos "Descrição" e "Valor (em R$)" do seu arquivo</small></p>
+                
+                <div class="file-input-wrapper">
+                    <input type="file" id="csvFile" class="file-input" accept=".csv" />
+                    <label for="csvFile" class="file-input-label">
+                        📄 Clique aqui para selecionar um arquivo CSV
+                    </label>
+                </div>
+
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Processando arquivo...</p>
+                </div>
+
+                <div class="alert" id="alert"></div>
+
+                <div class="download-section" id="downloadSection" style="display: none;">
+                    <button class="btn" onclick="downloadProcessedCsv()">
+                        📥 Baixar CSV Processado
+                    </button>
+                </div>
+            </div>
+
+            <div class="results-section" id="resultsSection">
+                <h2>📊 Resumo por Categoria</h2>
+                <table class="summary-table" id="summaryTable">
+                    <thead>
+                        <tr>
+                            <th>Categoria</th>
+                            <th>Valor Total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="summaryTableBody">
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="uncategorized-section" id="uncategorizedSection" style="display: none;">
+                <h2>❓ Categorias Não Reconhecidas</h2>
+                <p>Defina manualmente a categoria para as seguintes descrições:</p>
+                <div id="uncategorizedItems"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let processedData = null;
+        let csvData = null;
+
+        document.getElementById('csvFile').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                processCsv(file);
+            }
+        });
+
+        async function processCsv(file) {
+            const formData = new FormData();
+            formData.append('file', file);
+
+            showLoading(true);
+            hideAlert();
+
+            try {
+                const response = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    showAlert('Erro: ' + errorText, 'error');
+                    return;
+                }
+
+                const result = await response.json();
+
+                if (result) {
+                    processedData = result;
+                    csvData = result.csvProcessado;
+                    showResults(result);
+                    showDownloadSection();
+                } else {
+                    showAlert('Resposta inválida do servidor', 'error');
+                }
+            } catch (error) {
+                showAlert('Erro de conexão: ' + error.message, 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        function showResults(data) {
+            // Mostrar resumo
+            const tbody = document.getElementById('summaryTableBody');
+            tbody.innerHTML = '';
+
+            data.resumos.forEach(resumo => {
+                const row = tbody.insertRow();
+                row.insertCell(0).textContent = resumo.categoria;
+                row.insertCell(1).textContent = 'R$ ' + resumo.valor.toFixed(2).replace('.', ',');
+            });
+
+            document.getElementById('resultsSection').classList.add('show');
+
+            // Mostrar itens não categorizados
+            if (data.naoCategorizadas && data.naoCategorizadas.length > 0) {
+                showUncategorizedItems(data.naoCategorizadas);
+            }
+        }
+
+        function showUncategorizedItems(items) {
+            const container = document.getElementById('uncategorizedItems');
+            container.innerHTML = '';
+
+            items.forEach(descricao => {
+                const item = document.createElement('div');
+                item.className = 'uncategorized-item';
+                item.innerHTML = `
+                    <span style="flex: 1; margin-right: 10px;">${descricao}</span>
+                    <input type="text" placeholder="Digite a categoria" id="cat_${descricao.replace(/[^a-zA-Z0-9]/g, '_')}" />
+                    <button class="btn" onclick="categorizeItem('${descricao.replace(/'/g, "\\'")}')">
+                        Salvar
+                    </button>
+                `;
+                container.appendChild(item);
+            });
+
+            document.getElementById('uncategorizedSection').style.display = 'block';
+        }
+
+        async function categorizeItem(descricao) {
+            const inputId = 'cat_' + descricao.replace(/[^a-zA-Z0-9]/g, '_');
+            const categoria = document.getElementById(inputId).value.trim();
+
+            if (!categoria) {
+                showAlert('Por favor, digite uma categoria', 'error');
+                return;
+            }
+
+            try {
+                const response = await fetch('/categorize', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        descricao: descricao,
+                        categoria: categoria
+                    })
+                });
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    showAlert('Erro: ' + errorText, 'error');
+                    return;
+                }
+
+                const result = await response.json();
+                if (result && result.message) {
+                    showAlert('Categorização salva com sucesso!', 'success');
+                    // Remover o item da lista
+                    const item = document.getElementById(inputId).closest('.uncategorized-item');
+                    item.remove();
+                } else {
+                    showAlert('Resposta inválida do servidor', 'error');
+                }
+            } catch (error) {
+                showAlert('Erro de conexão: ' + error.message, 'error');
+            }
+        }
+
+        function downloadProcessedCsv() {
+            if (csvData) {
+                const blob = new Blob([atob(csvData)], { type: 'text/csv' });
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'transacoes_processadas.csv';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+            }
+        }
+
+        function showLoading(show) {
+            document.getElementById('loading').style.display = show ? 'block' : 'none';
+        }
+
+        function showAlert(message, type) {
+            const alert = document.getElementById('alert');
+            alert.textContent = message;
+            alert.className = `alert ${type}`;
+            alert.style.display = 'block';
+        }
+
+        function hideAlert() {
+            document.getElementById('alert').style.display = 'none';
+        }
+
+        function showDownloadSection() {
+            document.getElementById('downloadSection').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
