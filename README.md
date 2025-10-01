@@ -2,6 +2,10 @@
 
 Sistema web em .NET 8 (Minimal API) para processamento e categorização de planilhas CSV.
 
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live-brightgreen)](https://gsbarbosa.github.io/reorganizer/)
+[![.NET 8](https://img.shields.io/badge/.NET-8-blue)](https://dotnet.microsoft.com/download/dotnet/8.0)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 ## Funcionalidades
 
 - 📁 Upload de arquivos CSV com colunas: Descrição e Valor (em R$)
@@ -11,7 +15,15 @@ Sistema web em .NET 8 (Minimal API) para processamento e categorização de plan
 - 💾 Persistência em arquivo JSON local
 - 🎨 Interface web moderna e responsiva
 
+## 🌐 Demonstração Online
+
+**📱 [Acesse a demonstração online](https://gsbarbosa.github.io/reorganizer/)**
+
+> **Nota:** A demonstração online mostra a documentação e funcionalidades do projeto. Para usar o sistema completo com upload de CSV, execute localmente.
+
 ## Como Usar
+
+### 🚀 Execução Local
 
 1. **Executar o projeto:**
    ```bash

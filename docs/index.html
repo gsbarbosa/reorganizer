@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reorganizer GSTV Tech - Processador de CSV</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .demo-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 2px solid #dee2e6;
+        }
+
+        .demo-section h2 {
+            color: #4facfe;
+            margin-bottom: 20px;
+        }
+
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-left: 4px solid #4facfe;
+        }
+
+        .feature-card h3 {
+            color: #4facfe;
+            margin-bottom: 10px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px 5px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(79, 172, 254, 0.3);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+        }
+
+        .code-block pre {
+            margin: 0;
+        }
+
+        .alert {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏦 Reorganizer GSTV Tech</h1>
+            <p>Sistema de processamento e categorização inteligente de planilhas CSV</p>
+        </div>
+
+        <div class="content">
+            <div class="demo-section">
+                <h2>📋 Sobre o Projeto</h2>
+                <p>O <strong>Reorganizer GSTV Tech</strong> é um sistema web desenvolvido em .NET 8 (Minimal API) que processa planilhas CSV e realiza categorização automática de transações financeiras.</p>
+                
+                <div class="alert info">
+                    <strong>🎯 Objetivo:</strong> Organizar automaticamente transações financeiras por categoria, aprendendo com as categorizações manuais do usuário.
+                </div>
+            </div>
+
+            <div class="demo-section">
+                <h2>✨ Funcionalidades Principais</h2>
+                <div class="feature-list">
+                    <div class="feature-card">
+                        <h3>📁 Upload de CSV</h3>
+                        <p>Processa arquivos CSV com colunas "Descrição" e "Valor (em R$)", ignorando campos desnecessários.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3>🤖 Categorização Automática</h3>
+                        <p>Categoriza automaticamente transações baseado em descrições conhecidas (ex: "Uber Viagem" → "Uber").</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3>🧠 Aprendizado Contínuo</h3>
+                        <p>Salva categorizações manuais em arquivo JSON para enriquecer a base de conhecimento.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3>📊 Resumo por Categoria</h3>
+                        <p>Agrupa transações por categoria e gera CSV resumido com valores totais.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3>🎨 Interface Moderna</h3>
+                        <p>Interface web responsiva com design moderno e feedback visual em tempo real.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3>⚙️ Configurável</h3>
+                        <p>Permite configurar porta de execução via arquivo de configuração ou variáveis de ambiente.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-section">
+                <h2>🚀 Como Executar</h2>
+                
+                <h3>Pré-requisitos:</h3>
+                <ul>
+                    <li>.NET 8 SDK</li>
+                    <li>Git</li>
+                </ul>
+
+                <h3>Passos:</h3>
+                <div class="code-block">
+                    <pre># Clone o repositório
+git clone https://github.com/gsbarbosa/reorganizer.git
+cd reorganizer
+
+# Execute a aplicação
+dotnet run
+
+# Ou configure uma porta personalizada
+Port=8080 dotnet run</pre>
+                </div>
+
+                <div class="alert">
+                    <strong>✅ Acesso:</strong> Abra o navegador em <code>http://localhost:5003</code> (ou porta configurada)
+                </div>
+            </div>
+
+            <div class="demo-section">
+                <h2>📊 Formato do CSV</h2>
+                <p>O sistema processa arquivos CSV com o seguinte formato:</p>
+                
+                <div class="code-block">
+                    <pre>Data de Compra;Nome no Cartão;Final do Cartão;Categoria;Descrição;Parcela;Valor (em US$);Cotação (em R$);Valor (em R$)
+01/10/2024;GUSTAVO S BARBOSA;0880;Assistência médica e odontológica;MT-E ODONTO LTDA;11/12;0;0;191.66
+01/11/2024;GUSTAVO S BARBOSA;0880;Marketing Direto;PG *BANDNEST PRODUCOES;10/12;0;0;196.99</pre>
+                </div>
+
+                <div class="alert warning">
+                    <strong>⚠️ Importante:</strong> O sistema processará apenas os campos "Descrição" e "Valor (em R$)", ignorando os demais campos.
+                </div>
+            </div>
+
+            <div class="demo-section">
+                <h2>🔧 Tecnologias Utilizadas</h2>
+                <div class="feature-list">
+                    <div class="feature-card">
+                        <h3>Backend</h3>
+                        <ul>
+                            <li>.NET 8 Minimal API</li>
+                            <li>CsvHelper</li>
+                            <li>System.Text.Json</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3>Frontend</h3>
+                        <ul>
+                            <li>HTML5</li>
+                            <li>CSS3 (Grid, Flexbox)</li>
+                            <li>JavaScript Vanilla</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3>Persistência</h3>
+                        <ul>
+                            <li>Arquivo JSON local</li>
+                            <li>Sem banco de dados</li>
+                            <li>Aprendizado contínuo</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-section">
+                <h2>📈 Exemplo de Saída</h2>
+                <p>Após processar o CSV, o sistema gera um resumo por categoria:</p>
+                
+                <div class="code-block">
+                    <pre>Categoria,Valor
+Odontologia,349.99
+Marketing,196.99
+E-commerce,53.32
+Serviços Profissionais,368.29</pre>
+                </div>
+            </div>
+
+            <div class="demo-section">
+                <h2>🔗 Links Úteis</h2>
+                <a href="https://github.com/gsbarbosa/reorganizer" class="btn" target="_blank">
+                    📁 Repositório GitHub
+                </a>
+                <a href="https://github.com/gsbarbosa/reorganizer/blob/main/README.md" class="btn btn-secondary" target="_blank">
+                    📖 Documentação Completa
+                </a>
+            </div>
+
+            <div class="demo-section">
+                <h2>⚠️ Limitação da Demonstração</h2>
+                <div class="alert warning">
+                    <strong>Importante:</strong> Esta é uma página de demonstração estática. Para usar o sistema completo com upload e processamento de CSV, você precisa executar a aplicação localmente ou em um servidor com suporte a .NET 8.
+                </div>
+                
+                <p>O sistema completo inclui:</p>
+                <ul>
+                    <li>Upload de arquivos CSV</li>
+                    <li>Processamento em tempo real</li>
+                    <li>Categorização automática</li>
+                    <li>Aprendizado contínuo</li>
+                    <li>Download de resultados</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
