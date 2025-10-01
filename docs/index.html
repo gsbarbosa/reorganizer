@@ -48,37 +48,50 @@
             padding: 40px;
         }
 
-        .demo-section {
+        .upload-section {
             background: #f8f9fa;
             border-radius: 10px;
             padding: 30px;
             margin-bottom: 30px;
-            border: 2px solid #dee2e6;
+            border: 2px dashed #dee2e6;
+            transition: all 0.3s ease;
         }
 
-        .demo-section h2 {
-            color: #4facfe;
-            margin-bottom: 20px;
+        .upload-section:hover {
+            border-color: #4facfe;
+            background: #f0f8ff;
         }
 
-        .feature-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin: 20px 0;
+        .file-input-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 100%;
         }
 
-        .feature-card {
-            background: white;
+        .file-input {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-input-label {
+            display: block;
             padding: 20px;
+            background: white;
+            border: 2px dashed #4facfe;
             border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            border-left: 4px solid #4facfe;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            color: #4facfe;
         }
 
-        .feature-card h3 {
-            color: #4facfe;
-            margin-bottom: 10px;
+        .file-input-label:hover {
+            background: #f0f8ff;
+            border-color: #00f2fe;
         }
 
         .btn {
@@ -91,8 +104,6 @@
             cursor: pointer;
             transition: all 0.3s ease;
             margin: 10px 5px;
-            text-decoration: none;
-            display: inline-block;
         }
 
         .btn:hover {
@@ -100,43 +111,160 @@
             box-shadow: 0 10px 20px rgba(79, 172, 254, 0.3);
         }
 
-        .btn-secondary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
         }
 
-        .code-block {
-            background: #2d3748;
-            color: #e2e8f0;
+        .results-section {
+            margin-top: 30px;
             padding: 20px;
-            border-radius: 8px;
-            margin: 20px 0;
-            overflow-x: auto;
-            font-family: 'Courier New', monospace;
+            background: #f8f9fa;
+            border-radius: 10px;
+            display: none;
         }
 
-        .code-block pre {
-            margin: 0;
+        .results-section.show {
+            display: block;
+        }
+
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .summary-table th,
+        .summary-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .summary-table th {
+            background: #4facfe;
+            color: white;
+            font-weight: 600;
+        }
+
+        .summary-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .uncategorized-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #fff3cd;
+            border-radius: 10px;
+            border-left: 4px solid #ffc107;
+        }
+
+        .uncategorized-item {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .uncategorized-item input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #4facfe;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .alert {
             padding: 15px;
             margin: 15px 0;
             border-radius: 5px;
+            display: none;
+        }
+
+        .alert.success {
             background: #d4edda;
             color: #155724;
             border: 1px solid #c3e6cb;
         }
 
-        .warning {
-            background: #fff3cd;
-            color: #856404;
-            border: 1px solid #ffeaa7;
+        .alert.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
         }
 
-        .info {
-            background: #d1ecf1;
-            color: #0c5460;
-            border: 1px solid #bee5eb;
+        .download-section {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .info-section {
+            background: #e3f2fd;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #2196f3;
+        }
+
+        .info-section h3 {
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #4facfe;
+        }
+
+        .stat-label {
+            color: #666;
+            margin-top: 5px;
         }
     </style>
 </head>
@@ -144,167 +272,340 @@
     <div class="container">
         <div class="header">
             <h1>🏦 Reorganizer GSTV Tech</h1>
-            <p>Sistema de processamento e categorização inteligente de planilhas CSV</p>
+            <p>Processe suas planilhas CSV e organize suas transações por categoria</p>
         </div>
 
         <div class="content">
-            <div class="demo-section">
-                <h2>📋 Sobre o Projeto</h2>
-                <p>O <strong>Reorganizer GSTV Tech</strong> é um sistema web desenvolvido em .NET 8 (Minimal API) que processa planilhas CSV e realiza categorização automática de transações financeiras.</p>
+            <div class="info-section">
+                <h3>ℹ️ Sistema Online Funcionando</h3>
+                <p>Esta é uma versão JavaScript pura que funciona completamente no navegador. Todos os dados são processados localmente e não são enviados para nenhum servidor.</p>
+            </div>
+
+            <div class="upload-section">
+                <h2>📁 Upload do Arquivo CSV</h2>
+                <p>Selecione um arquivo CSV com as colunas: Descrição e Valor (em R$)</p>
+                <p><small>O sistema processará apenas os campos "Descrição" e "Valor (em R$)" do seu arquivo</small></p>
                 
-                <div class="alert info">
-                    <strong>🎯 Objetivo:</strong> Organizar automaticamente transações financeiras por categoria, aprendendo com as categorizações manuais do usuário.
+                <div class="file-input-wrapper">
+                    <input type="file" id="csvFile" class="file-input" accept=".csv" />
+                    <label for="csvFile" class="file-input-label">
+                        📄 Clique aqui para selecionar um arquivo CSV
+                    </label>
+                </div>
+
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Processando arquivo...</p>
+                </div>
+
+                <div class="alert" id="alert"></div>
+
+                <div class="download-section" id="downloadSection" style="display: none;">
+                    <button class="btn" onclick="downloadProcessedCsv()">
+                        📥 Baixar CSV Processado
+                    </button>
                 </div>
             </div>
 
-            <div class="demo-section">
-                <h2>✨ Funcionalidades Principais</h2>
-                <div class="feature-list">
-                    <div class="feature-card">
-                        <h3>📁 Upload de CSV</h3>
-                        <p>Processa arquivos CSV com colunas "Descrição" e "Valor (em R$)", ignorando campos desnecessários.</p>
-                    </div>
-                    
-                    <div class="feature-card">
-                        <h3>🤖 Categorização Automática</h3>
-                        <p>Categoriza automaticamente transações baseado em descrições conhecidas (ex: "Uber Viagem" → "Uber").</p>
-                    </div>
-                    
-                    <div class="feature-card">
-                        <h3>🧠 Aprendizado Contínuo</h3>
-                        <p>Salva categorizações manuais em arquivo JSON para enriquecer a base de conhecimento.</p>
-                    </div>
-                    
-                    <div class="feature-card">
-                        <h3>📊 Resumo por Categoria</h3>
-                        <p>Agrupa transações por categoria e gera CSV resumido com valores totais.</p>
-                    </div>
-                    
-                    <div class="feature-card">
-                        <h3>🎨 Interface Moderna</h3>
-                        <p>Interface web responsiva com design moderno e feedback visual em tempo real.</p>
-                    </div>
-                    
-                    <div class="feature-card">
-                        <h3>⚙️ Configurável</h3>
-                        <p>Permite configurar porta de execução via arquivo de configuração ou variáveis de ambiente.</p>
-                    </div>
+            <div class="stats-section" id="statsSection" style="display: none;">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalTransacoes">0</div>
+                    <div class="stat-label">Total de Transações</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalCategorias">0</div>
+                    <div class="stat-label">Categorias Identificadas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalValor">R$ 0,00</div>
+                    <div class="stat-label">Valor Total</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="naoCategorizadas">0</div>
+                    <div class="stat-label">Não Categorizadas</div>
                 </div>
             </div>
 
-            <div class="demo-section">
-                <h2>🚀 Como Executar</h2>
-                
-                <h3>Pré-requisitos:</h3>
-                <ul>
-                    <li>.NET 8 SDK</li>
-                    <li>Git</li>
-                </ul>
-
-                <h3>Passos:</h3>
-                <div class="code-block">
-                    <pre># Clone o repositório
-git clone https://github.com/gsbarbosa/reorganizer.git
-cd reorganizer
-
-# Execute a aplicação
-dotnet run
-
-# Ou configure uma porta personalizada
-Port=8080 dotnet run</pre>
-                </div>
-
-                <div class="alert">
-                    <strong>✅ Acesso:</strong> Abra o navegador em <code>http://localhost:5003</code> (ou porta configurada)
-                </div>
+            <div class="results-section" id="resultsSection">
+                <h2>📊 Resumo por Categoria</h2>
+                <table class="summary-table" id="summaryTable">
+                    <thead>
+                        <tr>
+                            <th>Categoria</th>
+                            <th>Valor Total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="summaryTableBody">
+                    </tbody>
+                </table>
             </div>
 
-            <div class="demo-section">
-                <h2>📊 Formato do CSV</h2>
-                <p>O sistema processa arquivos CSV com o seguinte formato:</p>
-                
-                <div class="code-block">
-                    <pre>Data de Compra;Nome no Cartão;Final do Cartão;Categoria;Descrição;Parcela;Valor (em US$);Cotação (em R$);Valor (em R$)
-01/10/2024;GUSTAVO S BARBOSA;0880;Assistência médica e odontológica;MT-E ODONTO LTDA;11/12;0;0;191.66
-01/11/2024;GUSTAVO S BARBOSA;0880;Marketing Direto;PG *BANDNEST PRODUCOES;10/12;0;0;196.99</pre>
-                </div>
-
-                <div class="alert warning">
-                    <strong>⚠️ Importante:</strong> O sistema processará apenas os campos "Descrição" e "Valor (em R$)", ignorando os demais campos.
-                </div>
-            </div>
-
-            <div class="demo-section">
-                <h2>🔧 Tecnologias Utilizadas</h2>
-                <div class="feature-list">
-                    <div class="feature-card">
-                        <h3>Backend</h3>
-                        <ul>
-                            <li>.NET 8 Minimal API</li>
-                            <li>CsvHelper</li>
-                            <li>System.Text.Json</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="feature-card">
-                        <h3>Frontend</h3>
-                        <ul>
-                            <li>HTML5</li>
-                            <li>CSS3 (Grid, Flexbox)</li>
-                            <li>JavaScript Vanilla</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="feature-card">
-                        <h3>Persistência</h3>
-                        <ul>
-                            <li>Arquivo JSON local</li>
-                            <li>Sem banco de dados</li>
-                            <li>Aprendizado contínuo</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="demo-section">
-                <h2>📈 Exemplo de Saída</h2>
-                <p>Após processar o CSV, o sistema gera um resumo por categoria:</p>
-                
-                <div class="code-block">
-                    <pre>Categoria,Valor
-Odontologia,349.99
-Marketing,196.99
-E-commerce,53.32
-Serviços Profissionais,368.29</pre>
-                </div>
-            </div>
-
-            <div class="demo-section">
-                <h2>🔗 Links Úteis</h2>
-                <a href="https://github.com/gsbarbosa/reorganizer" class="btn" target="_blank">
-                    📁 Repositório GitHub
-                </a>
-                <a href="https://github.com/gsbarbosa/reorganizer/blob/main/README.md" class="btn btn-secondary" target="_blank">
-                    📖 Documentação Completa
-                </a>
-            </div>
-
-            <div class="demo-section">
-                <h2>⚠️ Limitação da Demonstração</h2>
-                <div class="alert warning">
-                    <strong>Importante:</strong> Esta é uma página de demonstração estática. Para usar o sistema completo com upload e processamento de CSV, você precisa executar a aplicação localmente ou em um servidor com suporte a .NET 8.
-                </div>
-                
-                <p>O sistema completo inclui:</p>
-                <ul>
-                    <li>Upload de arquivos CSV</li>
-                    <li>Processamento em tempo real</li>
-                    <li>Categorização automática</li>
-                    <li>Aprendizado contínuo</li>
-                    <li>Download de resultados</li>
-                </ul>
+            <div class="uncategorized-section" id="uncategorizedSection" style="display: none;">
+                <h2>❓ Categorias Não Reconhecidas</h2>
+                <p>Defina manualmente a categoria para as seguintes descrições:</p>
+                <div id="uncategorizedItems"></div>
             </div>
         </div>
     </div>
+
+    <script>
+        let categorias = JSON.parse(localStorage.getItem('categorias') || '{}');
+        let processedData = null;
+        let csvData = null;
+
+        // Categorias padrão para reconhecimento automático
+        const categoriasPadrao = {
+            "Uber": ["uber", "uber eats", "uber viagem"],
+            "Alimentação": ["restaurante", "padaria", "lanchonete", "pizza", "hamburger", "mcdonald", "subway", "starbucks"],
+            "Supermercado": ["supermercado", "extra", "carrefour", "walmart", "pão de açúcar", "mercado"],
+            "Transporte": ["gasolina", "posto", "shell", "petrobras", "estacionamento", "pedágio"],
+            "Saúde": ["farmacia", "drogaria", "hospital", "clinica", "odontologia", "dentista"],
+            "Entretenimento": ["netflix", "spotify", "youtube", "cinema", "teatro", "show"],
+            "E-commerce": ["amazon", "mercadolivre", "magazine luiza", "americanas", "submarino"],
+            "Educação": ["curso", "universidade", "escola", "livraria", "apostila"],
+            "Serviços": ["contabilidade", "advogado", "consultoria", "marketing", "publicidade"]
+        };
+
+        // Inicializar categorias se não existirem
+        if (Object.keys(categorias).length === 0) {
+            categorias = { ...categoriasPadrao };
+            salvarCategorias();
+        }
+
+        document.getElementById('csvFile').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                processCsv(file);
+            }
+        });
+
+        function processCsv(file) {
+            showLoading(true);
+            hideAlert();
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const csv = e.target.result;
+                    const transacoes = parseCSV(csv);
+                    const resumos = agruparPorCategoria(transacoes);
+                    
+                    processedData = { transacoes, resumos };
+                    csvData = gerarCsvResumido(resumos);
+                    
+                    showResults({ transacoes, resumos });
+                    showDownloadSection();
+                    showStats(transacoes, resumos);
+                } catch (error) {
+                    showAlert('Erro ao processar arquivo: ' + error.message, 'error');
+                } finally {
+                    showLoading(false);
+                }
+            };
+            
+            reader.readAsText(file, 'UTF-8');
+        }
+
+        function parseCSV(csv) {
+            const lines = csv.split('\n');
+            const headers = lines[0].split(';');
+            
+            // Encontrar índices das colunas necessárias
+            const descricaoIndex = headers.findIndex(h => h.toLowerCase().includes('descrição'));
+            const valorIndex = headers.findIndex(h => h.toLowerCase().includes('valor') && h.includes('R'));
+            
+            if (descricaoIndex === -1) {
+                throw new Error('Coluna "Descrição" não encontrada');
+            }
+            if (valorIndex === -1) {
+                throw new Error('Coluna "Valor (em R$)" não encontrada');
+            }
+
+            const transacoes = [];
+            
+            for (let i = 1; i < lines.length; i++) {
+                const line = lines[i].trim();
+                if (!line) continue;
+                
+                const values = line.split(';');
+                if (values.length < Math.max(descricaoIndex, valorIndex) + 1) continue;
+                
+                const descricao = values[descricaoIndex]?.trim() || '';
+                const valorStr = values[valorIndex]?.trim() || '0';
+                
+                // Limpar e converter valor
+                const valorLimpo = valorStr.replace(/[R$\s]/g, '').replace(',', '.');
+                const valor = parseFloat(valorLimpo) || 0;
+                
+                if (descricao && valor > 0) {
+                    const categoria = categorizar(descricao);
+                    transacoes.push({
+                        descricao,
+                        valor,
+                        categoria
+                    });
+                }
+            }
+            
+            return transacoes;
+        }
+
+        function categorizar(descricao) {
+            const descricaoLower = descricao.toLowerCase();
+            
+            for (const [categoria, palavras] of Object.entries(categorias)) {
+                if (palavras.some(palavra => descricaoLower.includes(palavra.toLowerCase()))) {
+                    return categoria;
+                }
+            }
+            
+            return "Não Categorizado";
+        }
+
+        function agruparPorCategoria(transacoes) {
+            const grupos = {};
+            
+            transacoes.forEach(transacao => {
+                if (!grupos[transacao.categoria]) {
+                    grupos[transacao.categoria] = 0;
+                }
+                grupos[transacao.categoria] += transacao.valor;
+            });
+            
+            return Object.entries(grupos)
+                .map(([categoria, valor]) => ({ categoria, valor }))
+                .sort((a, b) => b.valor - a.valor);
+        }
+
+        function gerarCsvResumido(resumos) {
+            const header = 'Categoria,Valor\n';
+            const rows = resumos.map(r => `${r.categoria},${r.valor.toFixed(2).replace('.', ',')}`).join('\n');
+            return header + rows;
+        }
+
+        function showResults(data) {
+            // Mostrar resumo
+            const tbody = document.getElementById('summaryTableBody');
+            tbody.innerHTML = '';
+
+            data.resumos.forEach(resumo => {
+                const row = tbody.insertRow();
+                row.insertCell(0).textContent = resumo.categoria;
+                row.insertCell(1).textContent = 'R$ ' + resumo.valor.toFixed(2).replace('.', ',');
+            });
+
+            document.getElementById('resultsSection').classList.add('show');
+
+            // Mostrar itens não categorizados
+            const naoCategorizadas = data.transacoes
+                .filter(t => t.categoria === "Não Categorizado")
+                .map(t => t.descricao)
+                .filter((desc, index, array) => array.indexOf(desc) === index);
+
+            if (naoCategorizadas.length > 0) {
+                showUncategorizedItems(naoCategorizadas);
+            }
+        }
+
+        function showStats(transacoes, resumos) {
+            document.getElementById('totalTransacoes').textContent = transacoes.length;
+            document.getElementById('totalCategorias').textContent = resumos.filter(r => r.categoria !== "Não Categorizado").length;
+            document.getElementById('totalValor').textContent = 'R$ ' + transacoes.reduce((sum, t) => sum + t.valor, 0).toFixed(2).replace('.', ',');
+            document.getElementById('naoCategorizadas').textContent = transacoes.filter(t => t.categoria === "Não Categorizado").length;
+            
+            document.getElementById('statsSection').style.display = 'grid';
+        }
+
+        function showUncategorizedItems(items) {
+            const container = document.getElementById('uncategorizedItems');
+            container.innerHTML = '';
+
+            items.forEach(descricao => {
+                const item = document.createElement('div');
+                item.className = 'uncategorized-item';
+                item.innerHTML = `
+                    <span style="flex: 1; margin-right: 10px;">${descricao}</span>
+                    <input type="text" placeholder="Digite a categoria" id="cat_${descricao.replace(/[^a-zA-Z0-9]/g, '_')}" />
+                    <button class="btn" onclick="categorizeItem('${descricao.replace(/'/g, "\\'")}')">
+                        Salvar
+                    </button>
+                `;
+                container.appendChild(item);
+            });
+
+            document.getElementById('uncategorizedSection').style.display = 'block';
+        }
+
+        function categorizeItem(descricao) {
+            const inputId = 'cat_' + descricao.replace(/[^a-zA-Z0-9]/g, '_');
+            const categoria = document.getElementById(inputId).value.trim();
+
+            if (!categoria) {
+                showAlert('Por favor, digite uma categoria', 'error');
+                return;
+            }
+
+            // Adicionar à base de conhecimento
+            if (!categorias[categoria]) {
+                categorias[categoria] = [];
+            }
+            
+            if (!categorias[categoria].includes(descricao)) {
+                categorias[categoria].push(descricao);
+                salvarCategorias();
+            }
+
+            showAlert('Categorização salva com sucesso!', 'success');
+            
+            // Remover o item da lista
+            const item = document.getElementById(inputId).closest('.uncategorized-item');
+            item.remove();
+            
+            // Recarregar dados se necessário
+            setTimeout(() => {
+                const fileInput = document.getElementById('csvFile');
+                if (fileInput.files.length > 0) {
+                    processCsv(fileInput.files[0]);
+                }
+            }, 1000);
+        }
+
+        function salvarCategorias() {
+            localStorage.setItem('categorias', JSON.stringify(categorias));
+        }
+
+        function downloadProcessedCsv() {
+            if (csvData) {
+                const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement('a');
+                const url = URL.createObjectURL(blob);
+                link.setAttribute('href', url);
+                link.setAttribute('download', 'transacoes_processadas.csv');
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+
+        function showLoading(show) {
+            document.getElementById('loading').style.display = show ? 'block' : 'none';
+        }
+
+        function showAlert(message, type) {
+            const alert = document.getElementById('alert');
+            alert.textContent = message;
+            alert.className = `alert ${type}`;
+            alert.style.display = 'block';
+        }
+
+        function hideAlert() {
+            document.getElementById('alert').style.display = 'none';
+        }
+
+        function showDownloadSection() {
+            document.getElementById('downloadSection').style.display = 'block';
+        }
+    </script>
 </body>
 </html>
